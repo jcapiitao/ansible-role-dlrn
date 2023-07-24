@@ -9,6 +9,9 @@ target={{ worker.value.target }}
 reponame=delorean
 project_name={{ worker.value.project_name | default('RDO') }}
 tags={{ worker.value.release | default('rocky') }}
+{% if worker.value.buildsys_tags is defined %}
+buildsys_tags={{ worker.value.buildsys_tags }}
+{% endif %}
 workers={{ worker.value.worker_processes | default(1) }}
 {% if worker.value.rsyncdest is defined %}rsyncdest={{ worker.value.rsyncdest }}
 {% endif %}
