@@ -33,13 +33,14 @@ keep_changelog={{ worker.value.keep_changelog | default(False) }}
 use_components={{ worker.value.use_components | default(False) }}
 release_numbering={{ worker.value.release_numbering | default('0.date.hash') }}
 release_minor={{ worker.value.release_minor | default('0') }}
+{% set downstream_drivers = ['dlrn.drivers.downstream.DownstreamInfoDriver', 'dlrn.drivers.downstreamdeps.DownstreamDepsInfoDriver'] %}
 {% if worker.value.pkginfo_driver | default('dlrn.drivers.rdoinfo.RdoInfoDriver') == 'dlrn.drivers.gitrepo.GitRepoDriver' %}
 [gitrepo_driver]
 repo={{ worker.value.gitrepo_repo | default('http://github.com/openstack/rpm-packaging') }}
 directory={{ worker.value.gitrepo_dir | default('/openstack') }}
 skip={{ worker.value.gitrepo_skip | default(['openstack-macros']) | join(',') }}
 use_version_from_spec={{ worker.value.gitrepo_use_version_from_spec | default(True) }}
-{% elif worker.value.pkginfo_driver | default('dlrn.drivers.rdoinfo.RdoInfoDriver') == 'dlrn.drivers.downstream.DownstreamInfoDriver' %}
+{% elif worker.value.pkginfo_driver | default('dlrn.drivers.rdoinfo.RdoInfoDriver') in downstream_drivers %}
 [downstream_driver]
 {% if worker.value.downstream_distroinfo_repo is defined %}repo={{ worker.value.downstream_distroinfo_repo | default('') }}
 {% endif %}
